@@ -109,8 +109,8 @@ void draw() {
     first.camera(target.location.x -10*target.velocity.x, target.location.y + -5 *target.velocity.y -10, target.location.z + -10*target.velocity.z, target.location.x, target.location.y-5, target.location.z, 0, 1, 0);
     first.perspective( radians(30), width/height, 1, 100000);
     flock.display(first);
-    //clouds(first, cloudNum);
-    //landscaping(first);
+    clouds(first, cloudNum);
+    landscaping(first);
     first.endDraw();
 
     image(first, 0, 0);
