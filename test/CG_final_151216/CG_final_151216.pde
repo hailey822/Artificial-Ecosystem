@@ -99,7 +99,16 @@ void draw() {
     mainSketch.camera(cam_x, cam_y, cam_z, cam_cx, cam_cy, cam_cz, 0, 1, 0);
   }
   
-  mainSketch.perspective( radians(60), width/height, 1, 10000000);  
+  //if (isFirst) {
+    Boid target = flock.boids[50];
+    first.beginDraw();
+    first.background(sky);
+    first.camera(target.location.x -10*target.velocity.x, target.location.y + -5 *target.velocity.y -10, target.location.z + -10*target.velocity.z, target.location.x, target.location.y-5, target.location.z, 0, 1, 0);
+    first.perspective( radians(30), width/height, 1, 100000);
+    flock.display(first);
+    clouds(first, cloudNum);
+    landscaping(first);
+    first.endDraw();
 
   flock.display(mainSketch);
   landscaping(mainSketch);    
