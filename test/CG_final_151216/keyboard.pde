@@ -10,11 +10,44 @@ void updateCamCenter(PGraphics pg) {
   pg.camera(cam_x, cam_y, cam_z, cam_cx, cam_cy, cam_cz, 0, 1, 0);
 }
 
+boolean keyPushedF = false;
+
 class Key {
 
-  void keyInput(PGraphics pg) {
+  void keyInput(PGraphics pg) {    
+    if (keyPressed) {
+      if (key == 'f') {        
+        keyPushedF = true;
+      } 
+    } else if (keyPushedF) {
+      changeToFirstPerspective = !changeToFirstPerspective;
+      keyPushedF = false;
+    }
+    
+    
     if (keyPressed) { 
-      switch(keyCode) {
+      if (changeToFirstPerspective) {
+        keyInputOnFirstPerspective();
+      } else {
+        keyInputOnThirdPerspective(pg);
+      }
+    }
+  }
+  
+  void keyInputOnFirstPerspective() {
+    switch(keyCode) {
+      case LEFT:
+        targetAirPlaneIndex = targetAirPlaneIndex > 0 ? targetAirPlaneIndex-1 : maxObjects-1;
+      break;
+      
+      case RIGHT:
+        targetAirPlaneIndex = targetAirPlaneIndex < maxObjects-1 ? targetAirPlaneIndex + 1 : 0;
+      break;
+    }
+  }
+  
+  void keyInputOnThirdPerspective(PGraphics pg) {
+    switch(keyCode) {
       case UP: 
         tiltdeg  += 1;
         if (tiltdeg >= 180) {
@@ -59,5 +92,4 @@ class Key {
         break;
       }
     }
-  }
 }

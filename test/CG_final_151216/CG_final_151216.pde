@@ -1,13 +1,6 @@
 import processing.net.*;
 import java.nio.*;
 
-Server s;
-Client c;
-int data[];
-byte[] bytes;
-PImage img;
-
-
 float cam_x, cam_y, cam_z;
 float cam_cx, cam_cy, cam_cz;
 float cam_dx, cam_dy, cam_dz;
@@ -21,14 +14,14 @@ Key keyboard;
 
 int maxObjects = 800;
 
-PGraphics first;
-PGraphics third;
+PGraphics mainSketch;
 PImage sky;
 
-boolean isFirst = true;
+boolean changeToFirstPerspective = false;
 
 import processing.opengl.*;
 
+int targetAirPlaneIndex = 0;
 
 void setup() {
   //randomSeed(0);
@@ -36,8 +29,8 @@ void setup() {
   
   size(displayWidth, displayHeight, P3D );
 
-  first = createGraphics(width, height, P3D);
-  third = createGraphics(width, height, P3D);
+  //first = createGraphics(width, height, P3D);
+  mainSketch = createGraphics(width, height, P3D);
 
   sky = createImage(width, height, RGB);
   for (int i = 0; i < width; i++) {
@@ -50,7 +43,7 @@ void setup() {
   keyboard = new Key();
 
   for (int i = 0; i < maxObjects; i++) {
-    flock.addBoid( new Boid( random(-500, 500), random(-500, 500), random(-500, 500) ));
+    flock.addBoid( new Cell( random(-500, 500), random(-500, 500), random(-500, 500) ));    
   }
   
   //flock.boids[30] = new Boid( random(-500, 500), random(-500, 500), random(-500, 500), img);
@@ -73,33 +66,37 @@ void setup() {
 
   noStroke();
   generate();  
-
-  for (int i=0; i<cloudNum; i ++) {
-    pox[i] = random(-2000, 2000);
-    poy[i] = random(-2000, 2000);
-    w[i] = random(100, 500);
-    h[i] = random(100, 500);
-  }
-  
-  
-  s = new Server(this, 12345); // Start a simple server on a port
-  bytes = new byte[100000000];
   
 }
 
 void draw() {
   //println(frameRate);
   
+  //first.beginDraw();
+  //first.background(sky);
+  //first.camera(target.location.x -10*target.velocity.x, target.location.y + -5 *target.velocity.y -10, target.location.z + -10*target.velocity.z, target.location.x, target.location.y-5, target.location.z, 0, 1, 0);
+  //first.perspective( radians(30), width/height, 1, 100000);
+  //flock.display(first);
+  ////clouds(first, cloudNum);
+  ////landscaping(first);
+  //first.endDraw();
+
+  //image(first, 0, 0);
+    
   flock.run();
+  keyboard.keyInput(mainSketch);  
+
+  mainSketch.beginDraw();  
+  mainSketch.background(sky);
+  lights();
+  mainSketch.pushMatrix();
+  mainSketch.popMatrix(); 
   
-  c = s.available();
-  if (c != null) {
-    int byteCount = c.readBytesUntil((byte)10, bytes);
-    //println(byteCount);
-    //if (byteCount > 0) {
-    //  img = byteArrayToImage(bytes, 800, 700, byteCount);
-    //  flock.boids[30] = new Boid( random(-500, 500), random(-500, 500), random(-500, 500), img);
-    //}
+  if (changeToFirstPerspective) {
+    Cell target = flock.boids[targetAirPlaneIndex];
+    mainSketch.camera(target.location.x -10*target.velocity.x, target.location.y + -5 *target.velocity.y -10, target.location.z + -10*target.velocity.z, target.location.x, target.location.y-5, target.location.z, 0, 1, 0);
+  } else {
+    mainSketch.camera(cam_x, cam_y, cam_z, cam_cx, cam_cy, cam_cz, 0, 1, 0);
   }
   
   //if (isFirst) {
@@ -113,25 +110,13 @@ void draw() {
     landscaping(first);
     first.endDraw();
 
-    image(first, 0, 0);
-  //}
+  flock.display(mainSketch);
+  landscaping(mainSketch);    
 
-  //if (!isFirst) {
-  //  third.beginDraw();
-  //  keyboard.keyInput(third); 
-  //  third.background(sky);
-  //  lights();
-  //  third.pushMatrix();
-  //  third.popMatrix();
-  //  third.camera(cam_x, cam_y, cam_z, cam_cx, cam_cy, cam_cz, 0, 1, 0);
-  //  third.perspective( radians(60), width/height, 1, 10000000);
-  //  flock.display(third);
-  //  clouds(third, cloudNum);
-  //  landscaping(third);
-  //  third.endDraw();
+  mainSketch.endDraw();
 
-  //  image(third, 0, 0);
-  //}
+  image(mainSketch, 0, 0);
+  
 }
 
 void keyPressed(){
