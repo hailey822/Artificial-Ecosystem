@@ -9,7 +9,7 @@ class Branch {
   PVector dir;
   int count = 0;
   PVector saveDir;
-  float len = 0.5;
+  float len = 1;
   
   Branch(PVector v, PVector d) {
     parent = null;

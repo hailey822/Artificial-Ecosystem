@@ -9,38 +9,19 @@ PeasyCam cam;
 ArrayList<Tree> trees = new ArrayList<Tree>();
 
 void setup() {
-  size(1000, 1000, P3D);
+  size(900, 900, P3D);
+  cam = new PeasyCam(this, 10);
   colorMode(HSB);
-  cam = new PeasyCam(this, 1000);
   hint(ENABLE_DEPTH_SORT);
-  trees.add(new Tree(new PVector(0, 0, 0), 100));
-  trees.add(new Tree(new PVector(100, 140, 140), 200));
-  trees.add(new Tree(new PVector(-10, 0, 0), 0));
+  trees.add(new Tree(new PVector(0, 0, 0), 200));
+  trees.add(new Tree(new PVector(-100, -1000, 200), 100));
+  trees.add(new Tree(new PVector(100, height/2, -100), 0));
 }
 
 void draw() {
-  background(0);  
-  noStroke();
+  background(51);
   for (Tree tree : trees) {
     tree.show();
     tree.grow();
   }
-}
-
-void keyPressed(){
-  if (key == '1'){
-    Tree tree = trees.get(0);
-    tree.addLeaves();
-  }
-  
-  else if (key == '2'){
-  Tree tree = trees.get(1);
-    tree.addLeaves();
-  }
-  
-  else if (key == '3'){
-  Tree tree = trees.get(2);
-    tree.addLeaves(); 
-  }
-  
 }

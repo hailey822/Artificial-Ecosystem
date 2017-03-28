@@ -9,10 +9,12 @@ class Leaf {
   boolean reached = false;
   int hue;
 
-  Leaf(PVector center, int size, int _hue) {
-    hue = _hue;
-    PVector randomPoint = new PVector();
-    randomPoint.set (random(center.x-size, center.x+size), random(center.x-size, center.x+size), random(center.x-size, center.x+size));
+  Leaf(PVector center, int hue, int size) {
+    this.hue = hue;
+    PVector randomPoint = new PVector(0, 0, 0);
+    randomPoint.x = random(center.x-size, center.x+size);
+    randomPoint.y = random(center.y-size, center.y+size);
+    randomPoint.z = random(center.z-size, center.z+size);
     pos = randomPoint;
   }
 

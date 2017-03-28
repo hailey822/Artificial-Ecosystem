@@ -7,21 +7,21 @@ class Tree {
   ArrayList<Branch> branches = new ArrayList<Branch>();
   ArrayList<Leaf> leaves = new ArrayList<Leaf>();
   PVector center;
+  
   int hue;
   float min_dist = 5;
   float max_dist = 50;
   int radius = 50;
 
   Tree(PVector _center, int _hue) {
-    
     this.center = _center;
-    hue = _hue;
+    this.hue = _hue;
     
     for (int i = 0; i < 200; i++) {
-      leaves.add(new Leaf(center, radius, hue));
+      leaves.add(new Leaf(center, hue, radius));
     }    
     
-    Branch root = new Branch(center, new PVector(0, -1, 0));
+    Branch root = new Branch(center, new PVector(0, 0, 0));
     branches.add(root);
     Branch current = new Branch(root);
 
@@ -99,17 +99,11 @@ class Tree {
     for (int i = 0; i < branches.size(); i++) {
       Branch b = branches.get(i);
       if (b.parent != null) {
-        float sw = map(i, 0, branches.size(), 4, 1.0);
+        float sw = map(i, 0, branches.size(), 4, 0);
         strokeWeight(sw);
         stroke(hue, 255, 255);
         line(b.pos.x, b.pos.y, b.pos.z, b.parent.pos.x, b.parent.pos.y, b.parent.pos.z);
       }
     }
-  }
-  
-  void addLeaves(){
-    for (int i = 0; i < 50; i++) {
-      leaves.add(new Leaf(center, radius, hue));
-    }   
   }
 }
