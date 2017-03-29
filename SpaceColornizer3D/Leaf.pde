@@ -27,8 +27,7 @@ class Leaf {
     noStroke();
     pushMatrix();
     translate(pos.x, pos.y, pos.z);
-    //sphere(4);
-    ellipse(0,0, 1, 1);
+    ellipse(0,0, 2, 2);
     popMatrix();
   }
 }

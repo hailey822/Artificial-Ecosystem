@@ -99,11 +99,17 @@ class Tree {
     for (int i = 0; i < branches.size(); i++) {
       Branch b = branches.get(i);
       if (b.parent != null) {
-        float sw = map(i, 0, branches.size(), 4, 0);
+        float sw = map(i, 0, branches.size(), 4, 1.0);
         strokeWeight(sw);
         stroke(hue, 255, 255);
         line(b.pos.x, b.pos.y, b.pos.z, b.parent.pos.x, b.parent.pos.y, b.parent.pos.z);
       }
     }
+  }
+  
+  void addLeaves(){
+    for (int i = 0; i < 100; i++) {
+      leaves.add(new Leaf(center, hue, radius));
+    } 
   }
 }
