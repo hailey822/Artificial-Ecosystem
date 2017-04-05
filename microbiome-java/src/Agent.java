@@ -35,7 +35,7 @@ public class Agent extends PApplet implements AgentDelegate {
     }
 
     public void show(PApplet pApplet){
-        this.fetchMovement(agentsMovement.tick());
+//        this.fetchMovement(agentsMovement.tick());
 
         SpaceColornizer3D.logMillis("start draw agents", 2);
 
