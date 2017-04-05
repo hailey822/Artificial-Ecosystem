@@ -1,0 +1,11 @@
+# Compiled class file
+*.class
+
+microbiome-java/.idea/*
+microbiome-java/out/*
+
+microbiome-java/\.idea/
+
+microbiome-java/microbiome-java\.iml~Stashed changes
+
+microbiome-java/microbiome-java\.iml~Updated upstream
