@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/microbiome-java.iml" filepath="$PROJECT_DIR$/.idea/microbiome-java.iml" />
+      <module fileurl="file://$PROJECT_DIR$/microbiome-java.iml" filepath="$PROJECT_DIR$/microbiome-java.iml" />
     </modules>
   </component>
 </project>
